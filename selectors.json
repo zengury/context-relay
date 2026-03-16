@@ -1,0 +1,90 @@
+{
+  "_comment": "配置化选择器：前端 class 变动时只需更新此文件，无需重新发版",
+  "_version": "1.0",
+
+  "claude": {
+    "conversationContainer": [
+      "[data-testid='conversation-content']",
+      ".conversation-content",
+      "main"
+    ],
+    "userTurn": [
+      "[data-testid='human-turn']",
+      ".human-turn",
+      "[class*='HumanTurn']"
+    ],
+    "assistantTurn": [
+      "[data-testid='assistant-turn']",
+      ".assistant-turn",
+      "[class*='AssistantTurn']"
+    ],
+    "thinkingBlock": [
+      "[data-testid='thinking-block']",
+      "details.thinking",
+      "[class*='ThinkingBlock']",
+      "[class*='thinking-block']"
+    ],
+    "finalResponse": [
+      ".font-claude-message",
+      "[class*='prose']",
+      "[class*='message-content']"
+    ],
+    "inputBox": [
+      ".ProseMirror[contenteditable='true']",
+      "div[contenteditable='true']",
+      "textarea"
+    ]
+  },
+
+  "chatgpt": {
+    "conversationContainer": [
+      "main",
+      "#__next main"
+    ],
+    "userTurn": [
+      "article[data-testid^='conversation-turn'][class*='user']",
+      "[data-message-author-role='user']"
+    ],
+    "assistantTurn": [
+      "article[data-testid^='conversation-turn']:not([class*='user'])",
+      "[data-message-author-role='assistant']"
+    ],
+    "thinkingBlock": [],
+    "finalResponse": [
+      ".markdown",
+      "[class*='prose']",
+      "[class*='message-content']"
+    ],
+    "inputBox": [
+      "#prompt-textarea",
+      "textarea[data-id='root']",
+      "div[contenteditable='true']",
+      "textarea"
+    ]
+  },
+
+  "gemini": {
+    "conversationContainer": [
+      "chat-history",
+      "main"
+    ],
+    "userTurn": [
+      "user-query"
+    ],
+    "assistantTurn": [
+      "model-response"
+    ],
+    "thinkingBlock": [
+      "thought-chunk"
+    ],
+    "finalResponse": [
+      ".response-content",
+      "message-content"
+    ],
+    "inputBox": [
+      "rich-textarea div[contenteditable='true']",
+      "textarea",
+      "div[contenteditable='true']"
+    ]
+  }
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 270px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f7f7f8;
+      color: #1a1a1a;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .header h3 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .badge {
+      font-size: 10px;
+      background: #e0e7ff;
+      color: #3730a3;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-weight: 600;
+    }
+
+    /* ── 信息栏 ── */
+    #info-bar {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11.5px;
+      color: #6b7280;
+      margin-bottom: 12px;
+      min-height: 36px;
+      line-height: 1.6;
+    }
+    #info-bar .highlight { color: #059669; font-weight: 600; }
+    #info-bar .warn      { color: #d97706; font-weight: 600; }
+
+    /* ── 提取范围选择（PRD §3.1）── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .range-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .range-btn {
+      flex: 1;
+      padding: 6px 4px;
+      font-size: 11.5px;
+      font-weight: 500;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      color: #374151;
+      transition: all 0.15s;
+    }
+    .range-btn.active {
+      border-color: #6366f1;
+      background: #eef2ff;
+      color: #4338ca;
+      font-weight: 700;
+    }
+
+    /* ── 选项 ── */
+    .option-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+    .option-row input[type=checkbox] { cursor: pointer; accent-color: #6366f1; }
+
+    hr { border: none; border-top: 1px solid #e5e7eb; margin: 10px 0; }
+
+    /* ── 主按钮 ── */
+    .btn {
+      width: 100%;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity 0.15s, transform 0.1s;
+      text-align: center;
+    }
+    .btn:hover:not(:disabled) { opacity: 0.85; transform: translateY(-1px); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    #extractBtn { background: #10a37f; color: #fff; }
+    #injectBtn  { background: #2563eb; color: #fff; }
+    #clearBtn   {
+      background: transparent; color: #9ca3af;
+      border: 1px solid #e5e7eb; font-size: 11.5px; padding: 6px;
+    }
+
+    /* ── 状态 ── */
+    #status {
+      font-size: 11.5px;
+      color: #6b7280;
+      text-align: center;
+      margin-top: 4px;
+      white-space: pre-line;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span>🔁</span>
+    <h3>Context Relay</h3>
+    <span class="badge">v1.1</span>
+  </div>
+
+  <!-- 当前页面识别信息 -->
+  <div id="info-bar">识别中...</div>
+
+  <!-- 提取范围（PRD §3.1） -->
+  <div class="section-label">提取范围</div>
+  <div class="range-row">
+    <button class="range-btn active" data-range="all">全部轮次</button>
+    <button class="range-btn" data-range="last2">最后 2 轮</button>
+    <button class="range-btn" data-range="last4">最后 4 轮</button>
+  </div>
+
+  <!-- 选项 -->
+  <div class="option-row">
+    <input type="checkbox" id="includeThinking" checked>
+    <label for="includeThinking">包含 Thinking Trace（推理过程）</label>
+  </div>
+  <div class="option-row">
+    <input type="checkbox" id="includeImages" checked>
+    <label for="includeImages">附带图片链接</label>
+  </div>
+  <div class="option-row">
+    <input type="checkbox" id="distillContent">
+    <label for="distillContent">提炼压缩（要点 / 代码 / 结论）</label>
+  </div>
+
+  <hr>
+
+  <button class="btn" id="extractBtn">① 提取当前对话</button>
+  <button class="btn" id="injectBtn" disabled>② 注入目标输入框</button>
+  <button class="btn" id="clearBtn">清除暂存数据</button>
+
+  <div id="status"></div>
+
+  <script src="normalizer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
